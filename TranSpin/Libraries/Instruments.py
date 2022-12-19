@@ -27,18 +27,18 @@ def SetWvfFunction(func):
 def SetWvfAmplitude(amp):
     if float(amp) <= 6:
         Globals.activeInst["Waveform Generator"].amplitude = float(amp)
-        Globals.window.wvfAmpLineEdit.setText("{:.2f}".format(amp))
+        Globals.window.wvfAmpLineEdit.setText("{:.2f}".format(float(amp)))
     else:
         Globals.activeInst["Waveform Generator"].amplitude = 0.0
         Globals.window.wvfAmpLineEdit.setText("0.0")
         
 def SetWvfFrequency(freq):
     Globals.activeInst["Waveform Generator"].freq = float(freq)
-    Globals.window.wvfFreqLineEdit.setText("{:.2f}".format(freq))
+    Globals.window.wvfFreqLineEdit.setText("{:.2f}".format(float(freq)))
     
 def SetWvfOffset(offset):
     Globals.activeInst["Waveform Generator"].dcOffset = float(offset)
-    Globals.window.wvfOffsetLineEdit.setText("{:.2f}".format(offset))
+    Globals.window.wvfOffsetLineEdit.setText("{:.2f}".format(float(offset)))
     
 def WvfEnableOutput():
     Globals.activeInst["Waveform Generator"].waveform_start()
