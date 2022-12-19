@@ -25,9 +25,15 @@ def SetWvfFunction(func):
     Globals.activeInst["Waveform Generator"].waveForm = func
     
 def SetWvfAmplitude(amp):
-    if float(amp) <= 6:
-        Globals.activeInst["Waveform Generator"].amplitude = float(amp)
-        Globals.window.wvfAmpLineEdit.setText("{:.2f}".format(float(amp)))
+    
+    try: 
+        auxAmp = float(amp)
+    except:
+        pass
+    
+    if auxAmp <= 6:
+        Globals.activeInst["Waveform Generator"].amplitude = auxAmp
+        Globals.window.wvfAmpLineEdit.setText("{:.2f}".format(auxAmp))
     else:
         Globals.activeInst["Waveform Generator"].amplitude = 0.0
         Globals.window.wvfAmpLineEdit.setText("0.0")
@@ -59,4 +65,9 @@ def WvfDefaultMode():
     SetWvfFrequency(3.71)
     SetWvfOffset(0.0)
     Globals.activeInst["Waveform Generator"].shutdown()
+    
+def SetCurrSourAmplitude(amp):
+    
+    
+def CurrSourDefaultMode():
     
