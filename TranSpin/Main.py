@@ -19,19 +19,13 @@ from Libraries import Instruments
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     
     def HandleWvfOutPushButton(self):
-        auxText = self.wvfOutPushButton.text()
-        auxChkState = self.wvfOutPushButton.isChecked()
-        if auxChkState == True:
-            self.wvfOutPushButton.setText("Output OFF")
-            self.wvfOutPushButton.setChecked(False)
-            Instruments.WvfDisableOutput()
-        else:
-            self.wvfOutPushButton.setText("Output ON")
-            self.wvfOutPushButton.setChecked(True)
-            Instruments.WvfEnableOutput()
         
-        del auxText
-        del auxChkState
+        if self.wvfOutPushButton.isChecked():
+            self.wvfOutPushButton.setText("Output ON")
+            Instruments.WvfEnableOutput()
+        else:
+            self.wvfOutPushButton.setText("Output OFF")
+            Instruments.WvfDisableOutput()
         
     
     def SetupInstruments(self):
