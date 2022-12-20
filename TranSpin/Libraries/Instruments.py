@@ -31,7 +31,7 @@ def SetWvfAmplitude(amp):
     except:
         pass
     
-    if auxAmp <= 6:
+    if abs(auxAmp) <= 6:
         Globals.activeInst["Waveform Generator"].amplitude = auxAmp
         Globals.window.wvfAmpLineEdit.setText("{:.2f}".format(auxAmp))
     else:
@@ -39,12 +39,22 @@ def SetWvfAmplitude(amp):
         Globals.window.wvfAmpLineEdit.setText("0.0")
         
 def SetWvfFrequency(freq):
-    Globals.activeInst["Waveform Generator"].freq = float(freq)
-    Globals.window.wvfFreqLineEdit.setText("{:.2f}".format(float(freq)))
+    try: 
+        auxFreq = float(freq)
+    except:
+        pass
+   
+    Globals.activeInst["Waveform Generator"].freq = auxFreq
+    Globals.window.wvfFreqLineEdit.setText("{:.2f}".format(auxFreq))
     
 def SetWvfOffset(offset):
-    Globals.activeInst["Waveform Generator"].dcOffset = float(offset)
-    Globals.window.wvfOffsetLineEdit.setText("{:.2f}".format(float(offset)))
+    try: 
+        auxOffset = float(offset)
+    except:
+        pass
+   
+    Globals.activeInst["Waveform Generator"].dcOffset = auxOffset
+    Globals.window.wvfOffsetLineEdit.setText("{:.2f}".format(auxOffset))
     
 def WvfEnableOutput():
     Globals.activeInst["Waveform Generator"].waveform_start()
@@ -66,8 +76,72 @@ def WvfDefaultMode():
     SetWvfOffset(0.0)
     Globals.activeInst["Waveform Generator"].shutdown()
     
-def SetCurrSourAmplitude(amp):
+def SetCurrSourPhaseMarker():
+    Globals.activeInst["Current Source"].waveform_use_phasemarker = True
+    Globals.activeInst["Current Source"].waveform_phasemarker_channel = 1
     
+def SetCurrSourAmplitude(amp):
+    try: 
+        auxAmp = float(amp)
+    except:
+        pass
+    
+    if abs(auxAmp) <= 6:
+        Globals.activeInst["Current Source"].source_current = auxAmp
+        Globals.window.currSourAmpLineEdit.setText("{:.2f}".format(auxAmp))
+    else:
+        Globals.activeInst["Current Source"].source_current = 0.0
+        Globals.window.currSourAmpLineEdit.setText("0.0")
+        
+def SetCurrSourFrequency(freq):
+    try: 
+        auxFreq = float(freq)
+    except:
+        pass
+   
+    Globals.activeInst["Current Source"].waveform_frequency = auxFreq
+    Globals.window.currSourFreqLineEdit.setText("{:.2f}".format(auxFreq))
+    
+def SetCurrSourOffset(offset):
+    try: 
+        auxOffset = float(offset)
+    except:
+        pass
+    
+    if abs(auxOffset) <= 6e-3:
+        Globals.activeInst["Current Source"].waveform_offset = auxOffset
+        Globals.window.currSourOffsetLineEdit.setText("{:.2f}".format(auxOffset))
+    else:
+        Globals.activeInst["Current Source"].waveform_offset = 0.0
+        Globals.window.currSourOffsetLineEdit.setText("0.0")
+
+def SetCurrSourRange(currRange):
+    try:
+        auxCurrRange = float(currRange)
+    except:
+        pass
+    
+    Globals.activeInst["Current Source"].source_range = currRange
+
+def CurrSourEnableOutput():
+    Globals.activeInst["Current Source"].waveform_arm()
+    Globals.activeInst["Current Source"].waveform_start()
+    return
+
+def CurrSourDisableOutput():
+    Globals.activeInst["Current Source"].waveform_abort()
+    Globals.activeInst["Current Source"].disable_source()
+    return
+
+def CurrSourSafeMode():
+    SetCurrSourAmplitude(0.0)
+    SetCurrSourFrequency(10000)
+    SetCurrSourOffset(0.0)
     
 def CurrSourDefaultMode():
+    SetCurrSourRange(6e-3)
+    SetCurrSourAmplitude(3.0e-3)
+    SetCurrSourFrequency(13333)
+    SetCurrSourOffset(0.0)
+    CurrSourDisableOutput()
     

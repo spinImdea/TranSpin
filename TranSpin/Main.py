@@ -25,7 +25,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             Instruments.WvfEnableOutput()
         else:
             self.wvfOutPushButton.setText("Output OFF")
-            Instruments.WvfDisableOutput()
+            Instruments.WvfDisableOutput()    
+
+    def HandleCurrSourOutPushButton(self):
+        
+        if self.currSourOutPushButton.isChecked():
+            self.currSourOutPushButton.setText("Output ON")
+            Instruments.CurrSourEnableOutput()
+        else:
+            self.currSourOutPushButton.setText("Output OFF")
+            Instruments.CurrSourDisableOutput()
         
     
     def SetupInstruments(self):
